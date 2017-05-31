@@ -1,1 +1,1 @@
-Participated in the Hackerearth competition and ended up 11 in the private leaderboard
+This repo contains the codes that I have used for various comeptitions I have particpated in hackerearth.com 
