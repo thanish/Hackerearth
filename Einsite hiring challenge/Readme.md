@@ -6,3 +6,5 @@ The data had history of information regarding pickup and drop off locations, tim
 fare amount.
 
 I used an ensemble of 2 XGB models which gave me 8th place in the public leaderboard. 
+
+Leader board:https://www.hackerearth.com/challenge/hiring/einsite-data-science-hiring-challenge/leaderboard/
