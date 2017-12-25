@@ -182,6 +182,6 @@ pred_7 = GBM.h2o.pred.prod$p1
 final_pred = (pred_1 +pred_2 +pred_3 +pred_4 +pred_5 +pred_6 + pred_7)/7
 
 sub_GBM_h2o = data.frame(transaction_id = sub_id, target = final_pred)
-shead(sub_GBM_h2o)
+head(sub_GBM_h2o)
 write.csv(sub_GBM_h2o, row.names = F, 'sub_ens.csv')
 
