@@ -1,10 +1,4 @@
 
-#Laptop directory
-setwd('E:/Thanish/Data science/Hackerearth/SG - Brain wave/Predict Fraudulent Transactions')
-
-#Office laptop
-setwd('C:/Users/BTHANISH/Desktop/Thanish/Competition/Hacker earth/SG - Brain wave/Predict Fraudulent Transactions')
-
 library(data.table)
 library(MLmetrics)
 library(randomForest)
@@ -26,8 +20,8 @@ train_test_prod[ , ':=' (cat_var_38 = NULL,
 fac_columns = colnames(train_test_prod)[unlist(lapply(train_test_prod, FUN = function(x){ class(x)})) == 'character']
 fac_columns = setdiff(fac_columns, 'transaction_id')
 train_test_prod[, (fac_columns) := lapply(fac_columns, FUN = function(x) { x<- get(x)
-x[x ==''] <- "Other"
-x})]
+                                                                           x[x ==''] <- "Other"
+                                                                           x})]
 train_test_prod[, (fac_columns) := lapply(.SD, as.factor), .SDcols=fac_columns]
 train_test_prod[, (fac_columns) := lapply(.SD, as.numeric), .SDcols=fac_columns]
 
@@ -93,7 +87,6 @@ str(train_local)
 library(h2o)
 h2o.init(nthreads = -1, min_mem_size = '20g')
 
-
 train_prod_h2o = as.h2o(train_prod)
 test_prod_h2o = as.h2o(test_prod)
 train_local_h2o = as.h2o(train_local)
@@ -130,8 +123,6 @@ y_dep =  'target'
 RF.h2o.model.local = h2o.randomForest(x = x_indep, y = y_dep, ntrees = 500,
                                       stopping_metric = 'AUC',
                                       training_frame = train_prod_h2o,
-                                      #validation_frame = test_local_h2o,
-                                      #verbose = T,
                                       seed = 100)
 
 #On prod
@@ -143,10 +134,8 @@ x_indep = setdiff(colnames(train_prod_h2o), c('target', 'num_7_mul_2', 'num_1_mu
 y_dep =  'target'
 #GBM_5
 GBM.h2o.model.local = h2o.gbm(x = x_indep, y = y_dep,
-                              #nfolds = 4, fold_assignment = 'Stratified',
                               ntrees = 75, max_depth = 15,
                               training_frame = train_local_h2o,
-                              #verbose =T,
                               seed = 100)
 
 #On prod
@@ -156,10 +145,8 @@ pred_4 = GBM.h2o.pred.prod$p1
 
 #GBM_9
 GBM.h2o.model.local = h2o.gbm(x = x_indep, y = y_dep,
-                              #nfolds = 4, fold_assignment = 'Stratified',
                               ntrees = 100, max_depth = 15,
                               training_frame = train_prod_h2o,
-                              #verbose =T,
                               seed = 100)
 
 #On prod
@@ -169,11 +156,9 @@ pred_5 = GBM.h2o.pred.prod$p1
 
 #GBM_10
 GBM.h2o.model.local = h2o.gbm(x = x_indep, y = y_dep,
-                              #nfolds = 4, fold_assignment = 'Stratified',
                               ntrees = 100, max_depth = 15,
                               learn_rate = 0.05,
                               training_frame = train_prod_h2o,
-                              #verbose =T,
                               seed = 100)
 
 #On prod
@@ -183,12 +168,10 @@ pred_6 = GBM.h2o.pred.prod$p1
 
 #GBM_12
 GBM.h2o.model.local = h2o.gbm(x = x_indep, y = y_dep,
-                              #nfolds = 4, fold_assignment = 'Stratified',
                               ntrees = 125, max_depth = 15,
                               learn_rate = 0.05,
                               col_sample_rate = 0.9, sample_rate = 0.9,
                               training_frame = train_prod_h2o,
-                              #verbose =T,
                               seed = 100)
 
 #On prod
@@ -200,5 +183,5 @@ final_pred = (pred_1 +pred_2 +pred_3 +pred_4 +pred_5 +pred_6 + pred_7)/7
 
 sub_GBM_h2o = data.frame(transaction_id = sub_id, target = final_pred)
 shead(sub_GBM_h2o)
-write.csv(sub_GBM_h2o, row.names = F, 'sub_GBM_h2o_17.csv')
+write.csv(sub_GBM_h2o, row.names = F, 'sub_ens.csv')
 
