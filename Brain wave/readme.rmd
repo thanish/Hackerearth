@@ -1,1 +1,8 @@
-HI
+Brainwave is a 4th edition of the machine learning competition hosted by Societe Generale. The first part of the competiton is online round which had two problems to solve.
+
+1. A binary classification problem to predict the fraudulent transcation 
+2. A Regression problem to predict the Annual return.
+
+I have included my codes for both the problems in this repo. I finished 16th in the public leaderboard.
+
+https://www.hackerearth.com/challenge/competitive/brainwaves-17-1/leaderboard/
