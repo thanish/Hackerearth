@@ -1,9 +1,4 @@
 
-#Laptop directory
-setwd('E:/Thanish/Data science/Hackerearth/SG - Brain wave/Predict Annual Returns')
-
-#Office laptop
-setwd('C:/Users/BTHANISH/Desktop/Thanish/Competition/Hacker earth/SG - Brain wave/Predict Annual Returns')
 
 library(data.table)
 library(MLmetrics)
@@ -102,6 +97,7 @@ train_test_prod[, (new_fac_cols) := lapply(.SD, as.numeric), .SDcols=new_fac_col
 #Filling the numeric NA's with -999
 num_cols = colnames(train_test_prod)[unlist(lapply(train_test_prod, FUN = function(x){class(x) == 'integer' | class(x) == 'numeric'}))]
 num_cols = setdiff(num_cols, 'return')
+
 #Filling up the empty numeric columns 
 train_test_prod[, (num_cols):= lapply(num_cols, function(x) {x = get(x)
                                                              x[is.na(x)] <- -999
